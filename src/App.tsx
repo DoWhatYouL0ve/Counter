@@ -1,14 +1,30 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import style from './App.module.css';
-import {Button} from "./components/Button/Button";
-import {ScoreBoard} from "./components/ScoreBoard/ScoreBoard";
+import {Counter} from "./mainElements/Counter";
+import {SetCounterValue} from "./mainElements/SetCounterValue";
 
 function App() {
 
-    const maxValue = 5
-    const startValue = 0
+    useEffect(() => {
+        let savedStartValue = localStorage.getItem('startValue')
+        if(savedStartValue) {
+            let newStartValue = JSON.parse(savedStartValue)
+            setStartValue(newStartValue)
+            setValue(newStartValue)
+        }
+        let savedMaxValue = localStorage.getItem('maxValue')
+        if(savedMaxValue) {
+            let newMaxValue = JSON.parse(savedMaxValue)
+            setMaxValue(newMaxValue)
+        }
+    },[])
 
+    let [maxValue, setMaxValue] = useState<number>(1)
+    let [startValue, setStartValue] = useState<number>(0)
     let [value, setValue] = useState<number>(startValue)
+    let [isDisabled, setDisabled] = useState<boolean>(false)
+
+
 
     const increaseValue = () => {
         value += 1
@@ -18,17 +34,30 @@ function App() {
         setValue(startValue)
     }
 
+    const setScoreValue = () => {
+        if(startValue < maxValue) {
+            localStorage.setItem('startValue', JSON.stringify(startValue))
+            localStorage.setItem('maxValue', JSON.stringify(maxValue))
+            setValue(startValue)
+            setDisabled(false)
+        }
+    }
+
+    const setMaxValueCounter = (value: number) => {
+        setDisabled(true)
+        setMaxValue(value)
+
+    }
+    const setStartValueCounter = (value: number) => {
+        setDisabled(true)
+        setStartValue(value)
+
+    }
+
     return (
         <div className={style.appContainer}>
-            <div className={style.counterContainer}>
-                <div className={style.counterScoreBoard}>
-                    <ScoreBoard value={value}/>
-                </div>
-                <div className={style.counterButtonSection}>
-                    <Button onClickHandler={increaseValue} title={'Inc'} isDisabled={value === maxValue} />
-                    <Button onClickHandler={resetValue} title={'Reset'} isDisabled={value === startValue} />
-                </div>
-            </div>
+            <SetCounterValue setScoreValue={setScoreValue} maxValue={maxValue} startValue={startValue} setMaxValueHandler={setMaxValueCounter} setStartValueHandler={setStartValueCounter} isDisabled={isDisabled}/>
+            <Counter value={value} increaseValue={increaseValue} resetValue={resetValue} maxValue={maxValue} startValue={startValue} isDisabled={isDisabled} />
         </div>
     );
 }

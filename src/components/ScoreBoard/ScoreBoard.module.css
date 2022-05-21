@@ -1,8 +1,14 @@
 .valueHolder {
     font-size: 100px;
     font-weight: bold;
+    display: flex;
+    vertical-align: center;
 }
 
 .red {
     color: red;
+}
+
+.prompt {
+    font-size: 25px;
 }

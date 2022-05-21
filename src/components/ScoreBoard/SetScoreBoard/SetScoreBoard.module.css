@@ -1,0 +1,15 @@
+.containerValueHolder {
+
+}
+
+.valueHolder {
+    width: 300px;
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0;
+    font-weight: bold;
+}
+
+.error {
+    background-color: red;
+}
