@@ -1,56 +1,48 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import style from './App.module.css';
 import {Counter} from "./mainElements/Counter";
 import {SetCounterValue} from "./mainElements/SetCounterValue";
+import {useDispatch, useSelector} from "react-redux";
+import {StateType} from "./redux/store";
+import {
+    resetValueAC,
+    setDisabledAC,
+    setMaxValueCounterAC,
+    setStartValueCounterAC,
+    setValueAC
+} from "./redux/counter_Reducer";
 
 function App() {
 
-    useEffect(() => {
-        let savedStartValue = localStorage.getItem('startValue')
-        if(savedStartValue) {
-            let newStartValue = JSON.parse(savedStartValue)
-            setStartValue(newStartValue)
-            setValue(newStartValue)
-        }
-        let savedMaxValue = localStorage.getItem('maxValue')
-        if(savedMaxValue) {
-            let newMaxValue = JSON.parse(savedMaxValue)
-            setMaxValue(newMaxValue)
-        }
-    },[])
+    let value = useSelector<StateType, number>(state => state.counter.value)
+    let maxValue = useSelector<StateType, number>(state => state.counter.maxValue)
+    let startValue = useSelector<StateType, number>(state => state.counter.startValue)
+    let isDisabled = useSelector<StateType, boolean>(state => state.counter.isDisabled)
 
-    let [maxValue, setMaxValue] = useState<number>(1)
-    let [startValue, setStartValue] = useState<number>(0)
-    let [value, setValue] = useState<number>(startValue)
-    let [isDisabled, setDisabled] = useState<boolean>(false)
-
-
+    const dispatch = useDispatch()
 
     const increaseValue = () => {
-        value += 1
-        setValue(value)
+        dispatch(setValueAC(value))
     }
     const resetValue = () => {
-        setValue(startValue)
+        dispatch(resetValueAC(startValue))
     }
 
     const setScoreValue = () => {
         if(startValue < maxValue) {
-            localStorage.setItem('startValue', JSON.stringify(startValue))
-            localStorage.setItem('maxValue', JSON.stringify(maxValue))
-            setValue(startValue)
-            setDisabled(false)
+            dispatch(resetValueAC(startValue))
+            dispatch(setDisabledAC(false))
         }
     }
 
     const setMaxValueCounter = (value: number) => {
-        setDisabled(true)
-        setMaxValue(value)
+        dispatch(setDisabledAC(true))
+        dispatch(setMaxValueCounterAC(value))
 
     }
     const setStartValueCounter = (value: number) => {
-        setDisabled(true)
-        setStartValue(value)
+        dispatch(setDisabledAC(true))
+        dispatch(setStartValueCounterAC(value))
 
     }
 
