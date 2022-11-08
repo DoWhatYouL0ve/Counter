@@ -19,6 +19,7 @@ Feel free to adjust it for your personal use. 😃
 ## Built With:
 
 - React
+- Redux
 - TypeScript
 
 <hr/>
