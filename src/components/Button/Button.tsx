@@ -1,4 +1,4 @@
-import React from "react";
+import React, {memo} from "react";
 import style from './Button.module.css'
 
 type ButtonPropsType = {
@@ -7,7 +7,7 @@ type ButtonPropsType = {
     isDisabled: boolean
 }
 
-export const Button = (props: ButtonPropsType) => {
+export const Button = memo((props: ButtonPropsType) => {
 
     return (
         <div>
@@ -20,4 +20,4 @@ export const Button = (props: ButtonPropsType) => {
             </button>
         </div>
     )
-}
+})

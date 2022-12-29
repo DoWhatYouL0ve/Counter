@@ -1,7 +1,7 @@
 import style from "../App.module.css";
 import {ScoreBoard} from "../components/ScoreBoard/ScoreBoard";
 import {Button} from "../components/Button/Button";
-import React from "react";
+import React, {memo} from "react";
 
 type CounterType = {
     value: number
@@ -12,7 +12,7 @@ type CounterType = {
     isDisabled: boolean
 }
 
-export const Counter: React.FC<CounterType> = ({value, resetValue, increaseValue, startValue, maxValue, isDisabled}) => {
+export const Counter: React.FC<CounterType> = memo(({value, resetValue, increaseValue, startValue, maxValue, isDisabled}) => {
     return (
         <div>
             <div className={style.counterContainer}>
@@ -26,4 +26,4 @@ export const Counter: React.FC<CounterType> = ({value, resetValue, increaseValue
             </div>
         </div>
     )
-}
+})

@@ -1,4 +1,4 @@
-import React, {ChangeEvent} from "react";
+import React, {ChangeEvent, memo} from "react";
 import style from '../SetScoreBoard/SetScoreBoard.module.css'
 
 type SetScoreBoardPropsType = {
@@ -8,7 +8,7 @@ type SetScoreBoardPropsType = {
     startValue: number
 }
 
-export const SetScoreBoard = (props: SetScoreBoardPropsType) => {
+export const SetScoreBoard = memo((props: SetScoreBoardPropsType) => {
 
     const setMaxValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
         props.setMaxValueHandler(+e.currentTarget.value)
@@ -29,4 +29,4 @@ export const SetScoreBoard = (props: SetScoreBoardPropsType) => {
             </div>
         </div>
     )
-}
+})

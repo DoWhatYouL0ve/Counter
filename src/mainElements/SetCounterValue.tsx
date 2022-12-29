@@ -1,4 +1,4 @@
-import React from "react";
+import React, {memo} from "react";
 import style from "../App.module.css";
 import {Button} from "../components/Button/Button";
 import {SetScoreBoard} from "../components/ScoreBoard/SetScoreBoard/SetScoreBoard";
@@ -13,7 +13,7 @@ type SetCounterValueType = {
 
 }
 
-export const SetCounterValue: React.FC<SetCounterValueType> = ({ startValue, setScoreValue, maxValue, setMaxValueHandler, setStartValueHandler, isDisabled}) => {
+export const SetCounterValue: React.FC<SetCounterValueType> = memo(({ startValue, setScoreValue, maxValue, setMaxValueHandler, setStartValueHandler, isDisabled}) => {
     return (
         <div>
             <div className={style.counterContainer}>
@@ -26,4 +26,4 @@ export const SetCounterValue: React.FC<SetCounterValueType> = ({ startValue, set
             </div>
         </div>
     )
-}
+})

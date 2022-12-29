@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import style from './App.module.css';
 import {Counter} from "./mainElements/Counter";
 import {SetCounterValue} from "./mainElements/SetCounterValue";
@@ -21,12 +21,12 @@ function App() {
 
     const dispatch = useDispatch()
 
-    const increaseValue = () => {
+    const increaseValue = useCallback(() => {
         dispatch(setValueAC(value))
-    }
-    const resetValue = () => {
+    }, [value])
+    const resetValue = useCallback(() => {
         dispatch(resetValueAC(startValue))
-    }
+    }, [dispatch])
 
     const setScoreValue = () => {
         if(startValue < maxValue) {
@@ -35,16 +35,15 @@ function App() {
         }
     }
 
-    const setMaxValueCounter = (value: number) => {
+    const setMaxValueCounter = useCallback((value: number) => {
         dispatch(setDisabledAC(true))
         dispatch(setMaxValueCounterAC(value))
+    }, [value])
 
-    }
-    const setStartValueCounter = (value: number) => {
+    const setStartValueCounter = useCallback((value: number) => {
         dispatch(setDisabledAC(true))
         dispatch(setStartValueCounterAC(value))
-
-    }
+    }, [value])
 
     return (
         <div className={style.appContainer}>
